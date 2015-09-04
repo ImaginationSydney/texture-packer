@@ -5,7 +5,19 @@ bin-release/
 
 # Other files and folders
 .settings/
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+src/com/imagination/texturePacker/api/IAtlasPackage.as
+src/com/imagination/texturePacker/api/ITexturePacker.as
+src/com/imagination/texturePacker/api/convert/away3D/IAway3DPackage.as
+src/com/imagination/texturePacker/api/convert/starling/IStarlingPackage.as
+src/com/imagination/texturePacker/api/placement/IPlacement.as
+src/com/imagination/texturePacker/api/sheet/ISheet.as
+src/com/imagination/texturePacker/impl/convert/Convert.as
+src/com/imagination/texturePacker/impl/convert/away3D/AtlasUtil.as
+src/com/imagination/texturePacker/impl/convert/away3D/Away3DConverter.as
+src/com/imagination/texturePacker/impl/convert/away3D/Away3DPackage.as
+src/com/imagination/texturePacker/impl/convert/starling/StarlingConverter.as
+src/com/imagination/texturePacker/impl/convert/starling/StarlingPackage.as
+src/com/imagination/texturePacker/impl/placement/Placement.as
+src/com/imagination/texturePacker/impl/sheet/Sheet.as
+src/com/imagination/texturePacker/impl/AtlasPackage.as
+src/com/imagination/texturePacker/impl/TexturePacker.as
