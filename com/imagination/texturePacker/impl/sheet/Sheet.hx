@@ -8,6 +8,7 @@ import com.imagination.texturePacker.impl.math.PowerOf2;
 import com.imagination.texturePacker.impl.placement.Placement;
 import com.imagination.texturePacker.impl.TexturePacker;
 import openfl.display.BitmapData;
+import openfl.display.DisplayObject;
 import openfl.display.IBitmapDrawable;
 import openfl.display.Shape;
 import openfl.geom.Matrix;
@@ -132,6 +133,12 @@ class Sheet implements ISheet
 	
 	private function place(sourceObject:IBitmapDrawableObject):IBitmapDrawableObject 
 	{
+		var bounds:Rectangle = sourceObject.bounds;
+		if (Std.is(sourceObject, DisplayObject)) {
+			var sourceDisplayObject:DisplayObject = cast(sourceObject);
+			bounds = sourceDisplayObject.getBounds(sourceDisplayObject.parent);
+		}
+		
 		if (sourceObject.width > sourceObject.height) {
 			placements.sort(SortWidth);
 		}
@@ -152,16 +159,16 @@ class Sheet implements ISheet
 					(placementRect.width - (TexturePacker.objectPadding * 2)) / placementRect.width, 
 					(placementRect.height - (TexturePacker.objectPadding * 2)) / placementRect.height
 				);*/
-				matrix.tx = placementRect.x - sourceObject.bounds.x;
-				matrix.ty = placementRect.y - sourceObject.bounds.y;
+				matrix.tx = placementRect.x - bounds.x;
+				matrix.ty = placementRect.y - bounds.y;
 				
 				xmlString += '<SubTexture name="' + sourceObject.id +
 					'" x="' + Math.round(placementRect.x) + 
 					'" y="' + Math.round(placementRect.y) + 
 					'" width="' + Math.round(placementRect.width) + 
 					'" height="' + Math.round(placementRect.height) + 
-					'" pivotX="' + Math.round(sourceObject.bounds.x) + 
-					'" pivotY="' + Math.round(sourceObject.bounds.y) + 
+					'" pivotX="' + Math.round(bounds.x) + 
+					'" pivotY="' + Math.round(bounds.y) + 
 				'"/>';
 				
 				if (minRect.width < Math.round(placementRect.x) + Math.round(placementRect.width + TexturePacker.objectPadding)) {
@@ -170,7 +177,6 @@ class Sheet implements ISheet
 				if (minRect.height < Math.round(placementRect.y) + Math.round(placementRect.height + TexturePacker.objectPadding)) {
 					minRect.height = Math.round(placementRect.y) + Math.round(placementRect.height + TexturePacker.objectPadding);
 				}
-				
 				
 				if (TexturePacker.debug) {
 					var rect:Shape = new Shape();
@@ -202,16 +208,10 @@ class Sheet implements ISheet
 			}
 		}
 		
-		/*if (sourceObject.width > bitmapSize.x || sourceObject.height > bitmapSize.y) {
-			trace("WARMING: " + sourceObject + " larger than max texture size");
-			//return sourceObject;
-		}*/
 		if (sourceObject.width <= bitmapSize.x && sourceObject.height <= bitmapSize.y) {
 			return sourceObject;
 		}
 		return null;
-		
-		//return sourceObject;
 	}
 	
 	private function SortWidth(itemA:IPlacement, itemB:IPlacement):Int 

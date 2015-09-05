@@ -1,6 +1,8 @@
 package com.imagination.texturePacker.impl.placement; 
 
 import com.imagination.texturePacker.api.placement.IPlacement;
+import openfl.display.BitmapData;
+import openfl.display.DisplayObject;
 import openfl.display.IBitmapDrawable;
 import openfl.display.Shape;
 import openfl.geom.Rectangle;
@@ -45,15 +47,37 @@ class Placement implements IPlacement
 	
 	public function place(source:IBitmapDrawable):Rectangle
 	{
+		var _w:Float;
+		var _h:Float;
+		
+		if (Std.is(source, DisplayObject)) {
+			_w = cast(source, DisplayObject).width;
+			_h = cast(source, DisplayObject).height;
+		}
+		else if (Std.is(source, BitmapData)) {
+			_w = cast(source, BitmapData).width;
+			_h = cast(source, BitmapData).height;
+		}
+		else {
+			_w = Reflect.getProperty(source, "width");
+			_h = Reflect.getProperty(source, "height");
+		}
+		
 		var objectRect:Rectangle;
 		
-		if (Std.is(source, Shape)) objectRect = new Rectangle(0, 0, Reflect.getProperty(source, "width"), Reflect.getProperty(source, "height"));
-		else objectRect = Reflect.getProperty(source, "rect");
+		if (Std.is(source, Shape)) {
+			objectRect = new Rectangle(0, 0, _w, _h);
+		}
+		else {
+			objectRect = Reflect.getProperty(source, "rect");
+		}
 		
-		if (objectRect == null) objectRect = new Rectangle(0, 0, Reflect.getProperty(source, "width"), Reflect.getProperty(source, "height"));
+		if (objectRect == null) {
+			objectRect = new Rectangle(0, 0, _w, _h);
+		}
 		
 		if (objectRect.width < width && objectRect.height < height) {
-			return new Rectangle(x, y, Reflect.getProperty(source, "width"), Reflect.getProperty(source, "height"));
+			return new Rectangle(x, y, _w, _h);
 		}
 		else {
 			return null;

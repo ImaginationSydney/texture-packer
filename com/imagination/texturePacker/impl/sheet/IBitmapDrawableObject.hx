@@ -1,5 +1,6 @@
 package com.imagination.texturePacker.impl.sheet;
 
+import openfl.display.DisplayObject;
 import openfl.display.IBitmapDrawable;
 import openfl.geom.Rectangle;
 import openfl.utils.Dictionary;
@@ -31,6 +32,11 @@ class IBitmapDrawableObject
 		_height = Reflect.getProperty(source, "height");
 		if (Reflect.getProperty(source, "name") != null) _name = Reflect.getProperty(source, "name");
 		_bounds = new Rectangle(0, 0, _width, _height);
+		
+		if (Std.is(source, DisplayObject)) {
+			var d:DisplayObject = cast(source, DisplayObject);
+			_bounds = d.getBounds(d);
+		}
 		
 		if (Reflect.hasField(source, "getBounds")) {
 			var getBoundsFunc = Reflect.getProperty(source, "getBounds");
