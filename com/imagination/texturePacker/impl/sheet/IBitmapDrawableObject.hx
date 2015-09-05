@@ -23,7 +23,7 @@ class IBitmapDrawableObject
 	public var id(get, null):String;
 	public var bounds(get, null):Rectangle;
 	
-	private static var ref:Dictionary = new Dictionary();
+	private static var ref = new Dictionary();
 	
 	public function new(source:IBitmapDrawable):Void
 	{
@@ -64,7 +64,7 @@ class IBitmapDrawableObject
 	
 	public function get_id():String 
 	{
-		return Reflect.getProperty(ref, "source");
+		return _name;
 	}
 	
 	public function get_bounds():Rectangle 

@@ -13,13 +13,14 @@ import openfl.Vector;
  */
 interface IAway3DPackage 
 {
-	function get_container():ObjectContainer3D;
-	function get_meshs():Vector<Mesh>;
+	var container(get, null):ObjectContainer3D;
+	var meshs(get, null):Vector<Mesh>;
+	var textures(get, null):Vector<BitmapTexture>;
+	var materials(get, null):Vector<TextureMaterial>;
+	var rectangles(get, null):Vector<Rectangle>;
+	
 	function meshByName(name:String):Mesh;
-	function get_textures():Vector<BitmapTexture>;
 	function textureByName(name:String):BitmapTexture;
-	function get_materials():Vector<TextureMaterial>;
 	function materialByName(name:String):TextureMaterial;
-	function get_rectangles():Vector<Rectangle>;
-	function rectangleByName(name:String):Rectangle;	
+	function rectangleByName(name:String):Rectangle;		
 }
