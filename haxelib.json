@@ -1,8 +1,8 @@
 {
-	"name": "realtime-texture-packer",
-	"url": "https://github.com/ImaginationSydney/realtime-texture-packer",
+	"name": "texture-packer",
+	"url": "https://github.com/ImaginationSydney/texture-packer",
 	"license": "MIT",
-	"tags": [ "texture packer", "2d", "gpu", "openfl", "flash", "air", "js", "web", "cpp" ],
+	"tags": [ "texturepacker", "openfl", "flash", "air", "js", "web", "cpp" ],
 	"description": "convert IBitmapDrawable objects into spritesheets",
 	"version": "0.0.1",
 	"releasenote": "initial commit",
