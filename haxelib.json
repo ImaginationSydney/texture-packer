@@ -4,11 +4,12 @@
 	"license": "MIT",
 	"tags": [ "texturepacker", "openfl", "flash", "air", "js", "web", "cpp", "away3d" ],
 	"description": "convert IBitmapDrawable objects into spritesheets",
-	"version": "0.0.2",
-	"releasenote": "away3d convert update",
+	"version": "0.0.3",
+	"releasenote": "starling convert update",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		"swf": "",
-		"away3d":""
+		"away3d":"",
+		"starling":"",
 	}
 }
