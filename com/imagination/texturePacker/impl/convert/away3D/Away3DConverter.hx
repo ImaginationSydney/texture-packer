@@ -31,10 +31,10 @@ class Away3DConverter
 		var baseDisplay:DisplayObjectContainer;
 		if (Std.is(base, Class)) {
 			var className = Type.getClassName(base);
-			if (cache[className] == null) {
-				cache[className] = Type.createInstance(base, []);
+			if (!cache.exists(className)) {
+				cache.set(className, Type.createInstance(base, []));
 			}
-			baseDisplay = cache[className];
+			baseDisplay = cache.get(className);
 		}
 		else {
 			baseDisplay = base;
@@ -48,13 +48,12 @@ class Away3DConverter
 		{
 			var child:DisplayObject = baseDisplay.getChildAt(i);
 			texturePacker.add(child);
-			itemObjects[child.name] = new ItemObject(child);
-			
+			itemObjects.set(child.name, new ItemObject(child));
 		}
 		
-		var atlasPackage:IAtlasPackage = texturePacker.pack();
+		var atlasPackage = texturePacker.pack();
 		
-		var atlasTexture:BitmapTexture = new BitmapTexture(atlasPackage.bitmapData, generateMipmaps);
+		var atlasTexture = new BitmapTexture(atlasPackage.bitmapData, generateMipmaps);
 		var meshs = new Vector<Mesh>();
 		var materials = new Vector<TextureMaterial>();
 		var rectangles = new Vector<Rectangle>();

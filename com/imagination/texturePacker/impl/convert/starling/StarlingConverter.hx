@@ -20,21 +20,22 @@ import starling.textures.TextureAtlas;
  */
 class StarlingConverter 
 {
-	private static var cache:Dictionary = new Dictionary();
+	private static var cache = new Map<String, Dynamic>();
 	
 	public function new() 
 	{
 		
 	}		
 	
-	public static function parse(base:*, generateMipmaps:Boolean):IStarlingPackage 
+	public static function parse(base:Dynamic, generateMipmaps:Bool):IStarlingPackage 
 	{
 		var baseDisplay:DisplayObjectContainer;
-		if (base is Class) {
-			if (!cache[base]) {
-				cache[base] = new base();
+		if (Std.is(base, Class)) {
+			var className = Type.getClassName(base);
+			if (!cache.exists(className)) {
+				cache.set(className, Type.createInstance(base, []));
 			}
-			baseDisplay = cache[base];
+			baseDisplay = cache.get(className);
 		}
 		else {
 			baseDisplay = base;
@@ -43,24 +44,23 @@ class StarlingConverter
 		var container:Sprite = new Sprite();
 		var texturePacker:ITexturePacker = new TexturePacker();
 		
-		var itemObjects = new Vector<ItemObject>();
+		var itemObjects = new Map<String,ItemObject>();
 		
-		for (var i:Int = 0; i < baseDisplay.numChildren; i++) 
+		for (i in 0...baseDisplay.numChildren) 
 		{
 			var child:DisplayObject = baseDisplay.getChildAt(i);
 			texturePacker.add(child);
-			itemObjects.push(new ItemObject(child));
+			itemObjects.set(child.name, new ItemObject(child));
 		}
 		
-		var atlasPackage:IAtlasPackage = texturePacker.pack();
+		var atlasPackage = texturePacker.pack();
 		
-		var texture:Texture = Texture.fromBitmapData(atlasPackage.bitmapData, generateMipmaps);
-		var textureAtlas:TextureAtlas = new TextureAtlas(texture, atlasPackage.xml);
+		var texture = Texture.fromBitmapData(atlasPackage.bitmapData, generateMipmaps);
+		var textureAtlas = new TextureAtlas(texture, atlasPackage.xml);
 		var images = new Vector<Image>();
 		
-		for (var j:Int = 0; j < itemObjects.length; j++) 
+		for (item in itemObjects) 
 		{
-			var item:ItemObject = itemObjects[j];
 			var image:Image = new Image(textureAtlas.getTexture(item.name));
 			image.x = item.x;
 			image.y = item.y;
@@ -71,7 +71,7 @@ class StarlingConverter
 			images.push(image);
 		}
 		
-		var starlingPackage:IStarlingPackage = new StarlingPackage(container, images);
+		var starlingPackage = new StarlingPackage(container, images);
 		
 		return starlingPackage;
 	}

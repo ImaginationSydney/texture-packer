@@ -11,9 +11,10 @@ import starling.textures.Texture;
  */
 interface IStarlingPackage 
 {
-	function get_container():Sprite;
-	function get_images():Vector<Image>;
+	var container(get, null):Sprite;
+	var images(get, null):Vector<Image>;
+	var textures(get, null):Vector<Texture>;
+	
 	function imageByName(name:String):Image;
-	function get_textures():Vector<Texture>;
 	function textureByName(name:String):Texture;
 }

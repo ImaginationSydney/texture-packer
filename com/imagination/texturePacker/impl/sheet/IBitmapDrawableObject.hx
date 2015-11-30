@@ -3,7 +3,6 @@ package com.imagination.texturePacker.impl.sheet;
 import openfl.display.DisplayObject;
 import openfl.display.IBitmapDrawable;
 import openfl.geom.Rectangle;
-import openfl.utils.Dictionary;
 
 /**
  * ...
@@ -23,7 +22,7 @@ class IBitmapDrawableObject
 	public var id(get, null):String;
 	public var bounds(get, null):Rectangle;
 	
-	private static var ref = new Dictionary();
+	private static var ref = new Map<String, Dynamic>();
 	
 	public function new(source:IBitmapDrawable):Void
 	{
@@ -43,11 +42,14 @@ class IBitmapDrawableObject
 			_bounds = getBoundsFunc(source);
 		}
 		
-		if (Reflect.getProperty(ref, "source") == null) {
-			if (_name != null) Reflect.setProperty(ref, "source", _name);
+		
+		if (!ref.exists("source")) {
+			if (_name != null) {
+				ref.set("source", _name);
+			}
 			else {
 				var value = Math.floor(Math.random() * 100000000);
-				Reflect.setProperty(ref, "source", value);
+				ref.set("source", value);
 			}
 		}
 	}

@@ -25,6 +25,11 @@ class TexturePacker implements ITexturePacker
 	private var sources = new Vector<IBitmapDrawable>();
 	private var sheets = new Vector<ISheet>();
 	
+	public static function main()
+	{
+		
+	}
+	
 	public function new() 
 	{
 		

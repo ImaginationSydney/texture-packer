@@ -7,11 +7,30 @@ import openfl.display.BitmapData;
  */
 interface IAtlasPackage 
 {
-	var bitmapData(get, null):BitmapData;
-	var xml(get, null):Xml;
-	var next(get, null):IAtlasPackage;
-	
-	/*function get_bitmapData():BitmapData;
-	function get_xml():Xml;
-	function get_next():IAtlasPackage;*/
+	#if swc
+		@:extern
+		//@:noCompletion
+		var bitmapData(default, null):BitmapData;
+		
+		@:extern
+		//@:noCompletion
+		var xml(default, null):Xml;
+		
+		@:extern
+		//@:noCompletion
+		var next(default, null):IAtlasPackage;
+		
+		/*@:getter(bitmapData) 
+		function bitmapData():BitmapData;
+		
+		@:getter(xml)
+		function xml():Xml;
+		
+		@:getter(next)
+		function next():IAtlasPackage;*/
+	#else
+		var bitmapData(get, null):BitmapData;
+		var xml(get, null):Xml;
+		var next(get, null):IAtlasPackage;
+	#end
 }
