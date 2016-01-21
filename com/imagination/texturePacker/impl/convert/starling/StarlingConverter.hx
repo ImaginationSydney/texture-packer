@@ -21,6 +21,8 @@ import starling.textures.TextureAtlas;
 class StarlingConverter 
 {
 	private static var cache = new Map<String, Dynamic>();
+	//static private var textures;
+	static private var textureAtlases;
 	
 	public function new() 
 	{
@@ -54,14 +56,14 @@ class StarlingConverter
 		}
 		
 		var atlasPackage = texturePacker.pack();
+		textureAtlases = new Array<TextureAtlas>();
 		
-		var texture = Texture.fromBitmapData(atlasPackage.bitmapData, generateMipmaps);
-		var textureAtlas = new TextureAtlas(texture, atlasPackage.xml);
+		createTextures(atlasPackage, generateMipmaps);
 		var images = new Vector<Image>();
 		
 		for (item in itemObjects) 
 		{
-			var texture = getTexture(textureAtlas, item.name, atlasPackage);
+			var texture = getTexture(item.name, atlasPackage);
 			if (texture == null) {
 				trace("Can't find texture for " + item.name);
 				continue;
@@ -81,14 +83,21 @@ class StarlingConverter
 		return starlingPackage;
 	}
 	
-	static private function getTexture(textureAtlas:TextureAtlas, name:String, atlasPackage:IAtlasPackage) 
+	static private function createTextures(atlasPackage:IAtlasPackage, generateMipmaps:Bool) 
 	{
-		var texture = textureAtlas.getTexture(name);
-		if (texture == null && atlasPackage.next != null) {
-			return getTexture(textureAtlas, name, atlasPackage.next);
+		var texture = Texture.fromBitmapData(atlasPackage.bitmapData, generateMipmaps);
+		textureAtlases.push(new TextureAtlas(texture, atlasPackage.xml));
+		if (atlasPackage.next != null) createTextures(atlasPackage.next, generateMipmaps);
+	}
+	
+	static private function getTexture(name:String, atlasPackage:IAtlasPackage):Texture
+	{
+		var texture = null;
+		for (i in 0...textureAtlases.length) 
+		{
+			texture = textureAtlases[i].getTexture(name);
+			if (texture != null) break;
 		}
-		else {
-			return texture;
-		}
+		return texture;
 	}
 }

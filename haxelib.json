@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [ "texturepacker", "openfl", "flash", "air", "js", "web", "cpp", "away3d" ],
 	"description": "convert IBitmapDrawable objects into spritesheets",
-	"version": "0.0.5",
-	"releasenote": "starling convert update",
+	"version": "0.0.6",
+	"releasenote": "StarlingConverter updated to handle multi atlasPackages",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		
