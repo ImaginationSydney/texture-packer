@@ -61,7 +61,12 @@ class StarlingConverter
 		
 		for (item in itemObjects) 
 		{
-			var image:Image = new Image(textureAtlas.getTexture(item.name));
+			var texture = getTexture(textureAtlas, item.name, atlasPackage);
+			if (texture == null) {
+				trace("Can't find texture for " + item.name);
+				continue;
+			}
+			var image:Image = new Image(texture);
 			image.x = item.x;
 			image.y = item.y;
 			image.pivotX = -item.bounds.x;
@@ -74,5 +79,16 @@ class StarlingConverter
 		var starlingPackage = new StarlingPackage(container, images);
 		
 		return starlingPackage;
+	}
+	
+	static private function getTexture(textureAtlas:TextureAtlas, name:String, atlasPackage:IAtlasPackage) 
+	{
+		var texture = textureAtlas.getTexture(name);
+		if (texture == null && atlasPackage.next != null) {
+			return getTexture(textureAtlas, name, atlasPackage.next);
+		}
+		else {
+			return texture;
+		}
 	}
 }

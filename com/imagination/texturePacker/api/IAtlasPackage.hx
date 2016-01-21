@@ -29,8 +29,8 @@ interface IAtlasPackage
 		@:getter(next)
 		function next():IAtlasPackage;*/
 	#else
-		var bitmapData(get, null):BitmapData;
-		var xml(get, null):Xml;
-		var next(get, null):IAtlasPackage;
+		var bitmapData(default, null):BitmapData;
+		var xml(default, null):Xml;
+		var next(default, null):IAtlasPackage;
 	#end
 }
