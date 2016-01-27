@@ -9,6 +9,7 @@ import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
 import openfl.utils.Dictionary;
 import openfl.Vector;
+import starling.core.Starling;
 import starling.display.Image;
 import starling.display.Sprite;
 import starling.textures.Texture;
@@ -20,7 +21,7 @@ import starling.textures.TextureAtlas;
  */
 class StarlingConverter 
 {
-	private static var cache = new Map<String, Dynamic>();
+	private static var cache = new Map<String, IStarlingPackage>();
 	//static private var textures;
 	static private var textureAtlases;
 	
@@ -29,19 +30,13 @@ class StarlingConverter
 		
 	}		
 	
-	public static function parse(base:Dynamic, generateMipmaps:Bool):IStarlingPackage 
+	public static function parse(base:Class<Dynamic>, generateMipmaps:Bool):IStarlingPackage 
 	{
-		var baseDisplay:DisplayObjectContainer;
-		if (Std.is(base, Class)) {
-			var className = Type.getClassName(base);
-			if (!cache.exists(className)) {
-				cache.set(className, Type.createInstance(base, []));
-			}
-			baseDisplay = cache.get(className);
-		}
-		else {
-			baseDisplay = base;
-		}
+		var className = Type.getClassName(base);
+		var starlingPackage = cache.get(className);
+		if (starlingPackage != null) return starlingPackage;
+		
+		var baseDisplay:DisplayObjectContainer = Type.createInstance(base, []);
 		
 		var container:Sprite = new Sprite();
 		var texturePacker:ITexturePacker = new TexturePacker();
@@ -56,6 +51,12 @@ class StarlingConverter
 		}
 		
 		var atlasPackage = texturePacker.pack();
+		
+		
+		/*var bm:Bitmap = new Bitmap(atlasPackage.bitmapData);
+		bm.y = 400;
+		Starling.current.nativeStage.addChild(bm);*/
+		
 		textureAtlases = new Array<TextureAtlas>();
 		
 		createTextures(atlasPackage, generateMipmaps);
@@ -78,7 +79,9 @@ class StarlingConverter
 			images.push(image);
 		}
 		
-		var starlingPackage = new StarlingPackage(container, images);
+		starlingPackage = new StarlingPackage(container, images);
+		
+		cache.set(className, starlingPackage);
 		
 		return starlingPackage;
 	}
