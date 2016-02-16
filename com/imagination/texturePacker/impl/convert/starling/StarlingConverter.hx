@@ -41,13 +41,13 @@ class StarlingConverter
 		var container:Sprite = new Sprite();
 		var texturePacker:ITexturePacker = new TexturePacker();
 		
-		var itemObjects = new Map<String,ItemObject>();
+		var itemObjects = new Array<ItemObject>();
 		
 		for (i in 0...baseDisplay.numChildren) 
 		{
 			var child:DisplayObject = baseDisplay.getChildAt(i);
 			texturePacker.add(child);
-			itemObjects.set(child.name, new ItemObject(child));
+			itemObjects.push(new ItemObject(child));
 		}
 		
 		var atlasPackage = texturePacker.pack();
@@ -60,11 +60,13 @@ class StarlingConverter
 		textureAtlases = new Array<TextureAtlas>();
 		
 		createTextures(atlasPackage, generateMipmaps);
+		
 		var images = new Vector<Image>();
 		
-		for (item in itemObjects) 
+		for (i in 0...itemObjects.length) 
 		{
-			var texture = getTexture(item.name, atlasPackage);
+			var item = itemObjects[i];
+			var texture = getTexture(item.name);
 			if (texture == null) {
 				trace("Can't find texture for " + item.name);
 				continue;
@@ -93,12 +95,14 @@ class StarlingConverter
 		if (atlasPackage.next != null) createTextures(atlasPackage.next, generateMipmaps);
 	}
 	
-	static private function getTexture(name:String, atlasPackage:IAtlasPackage):Texture
+	static private function getTexture(name:String):Texture
 	{
+		
 		var texture = null;
 		for (i in 0...textureAtlases.length) 
 		{
-			texture = textureAtlases[i].getTexture(name);
+			var textureAtlas:TextureAtlas = textureAtlases[i];
+			texture = textureAtlas.getTexture(name);
 			if (texture != null) break;
 		}
 		return texture;
