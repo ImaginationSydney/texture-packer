@@ -3,6 +3,7 @@ package com.imagination.texturePacker.impl;
 import com.imagination.texturePacker.api.IAtlasPackage;
 import com.imagination.texturePacker.api.ITexturePacker;
 import com.imagination.texturePacker.api.sheet.ISheet;
+import com.imagination.texturePacker.impl.sheet.IBitmapDrawableObject;
 import com.imagination.texturePacker.impl.sheet.Sheet;
 import openfl.display.IBitmapDrawable;
 import openfl.geom.Point;
@@ -22,7 +23,7 @@ class TexturePacker implements ITexturePacker
 	public static var objectPadding:Int = 2;
 	
 	private var atlasPackage:IAtlasPackage;
-	private var sources = new Vector<IBitmapDrawable>();
+	private var sources = new Vector<IBitmapDrawableObject>();
 	private var sheets = new Vector<ISheet>();
 	
 	public static function main()
@@ -37,12 +38,19 @@ class TexturePacker implements ITexturePacker
 	
 	public function clear():Void
 	{
-		sources = new Vector<IBitmapDrawable>();
+		var i:Int = sources.length - 1;
+		while (i >= 0) 
+		{
+			sources[i].source = null;
+			sources.splice(i, 1);
+			i--;
+		}
+		sources = new Vector<IBitmapDrawableObject>();
 	}
 	
-	public function add(source:IBitmapDrawable):Void
+	public function add(source:IBitmapDrawable, id:String=null):Void
 	{
-		sources.push(source);
+		sources.push(new IBitmapDrawableObject(source, id));
 	}
 	
 	public function pack():IAtlasPackage

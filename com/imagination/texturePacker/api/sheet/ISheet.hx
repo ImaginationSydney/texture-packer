@@ -1,6 +1,7 @@
 package com.imagination.texturePacker.api.sheet;
 
 import com.imagination.texturePacker.api.IAtlasPackage;
+import com.imagination.texturePacker.impl.sheet.IBitmapDrawableObject;
 import openfl.display.IBitmapDrawable;
 
 /**
@@ -9,6 +10,6 @@ import openfl.display.IBitmapDrawable;
  */
 interface ISheet 
 {
-	function add(source:IBitmapDrawable):Void;
+	function add(source:IBitmapDrawableObject):Void;
 	function pack():IAtlasPackage;
 }

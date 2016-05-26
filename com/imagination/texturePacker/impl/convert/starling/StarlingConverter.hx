@@ -7,6 +7,7 @@ import com.imagination.texturePacker.impl.TexturePacker;
 import openfl.display.Bitmap;
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
+import openfl.display.MovieClip;
 import openfl.utils.Dictionary;
 import openfl.Vector;
 import starling.core.Starling;
@@ -37,7 +38,10 @@ class StarlingConverter
 		if (starlingPackage != null) return starlingPackage;
 		
 		var baseDisplay:DisplayObjectContainer = Type.createInstance(base, []);
-		
+		if (Std.is(baseDisplay, MovieClip)) {
+			var mc:MovieClip = untyped baseDisplay;
+			mc.stop();
+		}
 		var container:Sprite = new Sprite();
 		var texturePacker:ITexturePacker = new TexturePacker();
 		
@@ -53,7 +57,7 @@ class StarlingConverter
 		var atlasPackage = texturePacker.pack();
 		
 		
-		/*var bm:Bitmap = new Bitmap(atlasPackage.bitmapData);
+		/*var bm:Bitmap = new Bitmap(atlaspackage.bitmapData);
 		bm.y = 400;
 		Starling.current.nativeStage.addChild(bm);*/
 		

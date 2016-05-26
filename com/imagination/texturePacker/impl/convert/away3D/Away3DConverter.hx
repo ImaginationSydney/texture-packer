@@ -53,7 +53,7 @@ class Away3DConverter
 		
 		var atlasPackage = texturePacker.pack();
 		
-		var atlasTexture = new BitmapTexture(atlasPackage.bitmapData, generateMipmaps);
+		var atlasTexture = new BitmapTexture(atlaspackage.bitmapData, generateMipmaps);
 		var meshs = new Vector<Mesh>();
 		var materials = new Vector<TextureMaterial>();
 		var rectangles = new Vector<Rectangle>();
@@ -74,7 +74,7 @@ class Away3DConverter
 			mesh.name = item.name;
 			container.addChild(mesh);
 			
-			AtlasUtil.setUV(mesh, item.name, atlasPackage.xml, atlasTexture);
+			AtlasUtil.setUV(mesh, item.name, atlaspackage.xml, atlasTexture);
 			meshs.push(mesh);
 			
 			rectangles.push(new Rectangle(item.x, item.y, item.width, item.height));

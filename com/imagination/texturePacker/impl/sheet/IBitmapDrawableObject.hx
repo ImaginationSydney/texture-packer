@@ -17,6 +17,7 @@ class IBitmapDrawableObject
 	private var _bounds:Rectangle;
 	private var _name:String;
 	
+	public var name(get, null):String;
 	public var width(get, null):Float;
 	public var height(get, null):Float;
 	public var id(get, null):String;
@@ -24,9 +25,10 @@ class IBitmapDrawableObject
 	
 	private static var ref = new Map<String, Dynamic>();
 	
-	public function new(source:IBitmapDrawable):Void
+	public function new(source:IBitmapDrawable, id:String=null):Void
 	{
 		this.source = source;
+		_id = id;
 		_width = Reflect.getProperty(source, "width");
 		_height = Reflect.getProperty(source, "height");
 		if (Reflect.getProperty(source, "name") != null) _name = Reflect.getProperty(source, "name");
@@ -54,22 +56,28 @@ class IBitmapDrawableObject
 		}
 	}
 	
-	public function get_width():Float 
+	function get_width():Float 
 	{
 		return _width;
 	}
 	
-	public function get_height():Float 
-	{
-		return _height;
-	}
-	
-	public function get_id():String 
+	function get_name():String
 	{
 		return _name;
 	}
 	
-	public function get_bounds():Rectangle 
+	function get_height():Float 
+	{
+		return _height;
+	}
+	
+	function get_id():String 
+	{
+		if (_id != null) return _id;
+		return _name;
+	}
+	
+	function get_bounds():Rectangle 
 	{
 		return _bounds;
 	}

@@ -9,6 +9,6 @@ import openfl.display.IBitmapDrawable;
 interface ITexturePacker 
 {
 	function clear():Void;
-	function add(source:IBitmapDrawable):Void;
+	function add(source:IBitmapDrawable, id:String=null):Void;
 	function pack():IAtlasPackage;
 }

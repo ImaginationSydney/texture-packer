@@ -51,9 +51,9 @@ class Sheet implements ISheet
 		)));
 	}
 	
-	public function add(source:IBitmapDrawable):Void
+	public function add(source:IBitmapDrawableObject):Void
 	{
-		sources.push(new IBitmapDrawableObject(source));
+		sources.push(source);
 	}
 	
 	public function pack():IAtlasPackage
