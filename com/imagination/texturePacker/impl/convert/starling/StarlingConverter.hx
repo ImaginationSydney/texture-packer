@@ -57,7 +57,7 @@ class StarlingConverter
 		var atlasPackage = texturePacker.pack();
 		
 		
-		/*var bm:Bitmap = new Bitmap(atlaspackage.bitmapData);
+		/*var bm:Bitmap = new Bitmap(atlasPackage.bitmapData);
 		bm.y = 400;
 		Starling.current.nativeStage.addChild(bm);*/
 		
@@ -73,6 +73,10 @@ class StarlingConverter
 			var texture = getTexture(item.name);
 			if (texture == null) {
 				trace("Can't find texture for " + item.name);
+				continue;
+			}
+			if (texture.width == 0 || texture.height == 0) {
+				trace("texture can't have a width or height of 0px: " + item.name);
 				continue;
 			}
 			var image:Image = new Image(texture);
@@ -101,8 +105,8 @@ class StarlingConverter
 	
 	static private function getTexture(name:String):Texture
 	{
+		var texture:Texture = null;
 		
-		var texture = null;
 		for (i in 0...textureAtlases.length) 
 		{
 			var textureAtlas:TextureAtlas = textureAtlases[i];

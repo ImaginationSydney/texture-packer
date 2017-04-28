@@ -76,7 +76,7 @@ class Placement implements IPlacement
 			objectRect = new Rectangle(0, 0, _w, _h);
 		}
 		
-		if (objectRect.width < width && objectRect.height < height) {
+		if (objectRect.width <= width && objectRect.height <= height) {
 			return new Rectangle(x, y, _w, _h);
 		}
 		else {

@@ -39,16 +39,12 @@ class Sheet implements ISheet
 		
 		bitmapSize.setTo(TexturePacker.TARGET_TEXTURE_SIZE.x, TexturePacker.TARGET_TEXTURE_SIZE.y);
 		createPlacement();
+		placements;
 	}
 	
 	private function createPlacement() 
 	{
-		placements.push(new Placement(new Rectangle(
-			TexturePacker.framePadding, 
-			TexturePacker.framePadding, 
-			bitmapSize.x - (TexturePacker.framePadding * 2), 
-			bitmapSize.y - (TexturePacker.framePadding * 2)
-		)));
+		placements.push(new Placement(new Rectangle(TexturePacker.framePadding, TexturePacker.framePadding, bitmapSize.x - (TexturePacker.framePadding * 2), bitmapSize.y - (TexturePacker.framePadding * 2))));
 	}
 	
 	public function add(source:IBitmapDrawableObject):Void
@@ -67,8 +63,9 @@ class Sheet implements ISheet
 		if (TexturePacker.debug) tempBmd = new BitmapData(Std.int(bitmapSize.x), Std.int(bitmapSize.y), true, 0x2200FF00);
 		else tempBmd = new BitmapData(Std.int(bitmapSize.x), Std.int(bitmapSize.y), true, 0x00000000);
 		
-		xmlString = "";
+		xmlString = '<?xml version="1.0" encoding="utf-8"?>';
 		xmlString += '<TextureAtlas imagePath="">';
+		placements;
 		
 		for (i in 0...sources.length) 
 		{
@@ -90,6 +87,9 @@ class Sheet implements ISheet
 		
 		var bmdWidth:Int = PowerOf2.next(Std.int(minRect.width));
 		var bmdHeight:Int = PowerOf2.next(Std.int(minRect.height));
+		if (bmdWidth > TexturePacker.TARGET_TEXTURE_SIZE.x) bmdWidth = cast TexturePacker.TARGET_TEXTURE_SIZE.x;
+		if (bmdHeight > TexturePacker.TARGET_TEXTURE_SIZE.y) bmdHeight = cast TexturePacker.TARGET_TEXTURE_SIZE.y;
+		
 		atlasPackage = new AtlasPackage(bmdWidth, bmdHeight, xmlString, atlasPackage);
 		atlasPackage.bitmapData.copyPixels(tempBmd, atlasPackage.bitmapData.rect, atlasPackage.bitmapData.rect.topLeft);
 		tempBmd.dispose();
