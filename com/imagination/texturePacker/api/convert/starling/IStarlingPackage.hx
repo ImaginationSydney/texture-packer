@@ -15,6 +15,6 @@ interface IStarlingPackage
 	var images(get, null):Vector<Image>;
 	var textures(get, null):Vector<Texture>;
 	
-	function imageByName(name:String):Image;
+	function imageByName(name:String, clone:Bool = false):Image;
 	function textureByName(name:String):Texture;
 }

@@ -42,11 +42,29 @@ class StarlingPackage implements IStarlingPackage
 		return _images;
 	}
 	
-	public function imageByName(name:String):Image
+	public function imageByName(name:String, clone:Bool = false):Image
 	{
 		for (i in 0..._images.length) 
 		{
-			if (_images[i].name == name) return _images[i];
+			if (_images[i].name == name) {
+				if (clone) {
+					var image:Image = new Image(_images[i].texture);
+					image.x = _images[i].x;
+					image.y = _images[i].y;
+					image.width = _images[i].width;
+					image.height = _images[i].height;
+					image.scaleX = _images[i].scaleX;
+					image.scaleY = _images[i].scaleY;
+					image.pivotX = _images[i].pivotX;
+					image.pivotY = _images[i].pivotY;
+					image.rotation = _images[i].rotation;
+					image.alpha = _images[i].alpha;
+					return image;
+				}
+				else {
+					return _images[i];
+				}
+			}
 		}
 		return null;
 	}

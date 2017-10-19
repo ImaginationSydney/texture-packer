@@ -16,7 +16,7 @@ import openfl.Vector;
 class TexturePacker implements ITexturePacker
 {
 	public static var debug:Bool = false;
-	public static var TARGET_TEXTURE_SIZE:Point = new Point(2048, 2048);
+	public static var TARGET_TEXTURE_SIZE:Point = new Point(4096, 4096);
 	public static var AUTO_INCREASE_TEXTURE_SIZE:Bool = false;
 	
 	public static var framePadding:Int = 0;
